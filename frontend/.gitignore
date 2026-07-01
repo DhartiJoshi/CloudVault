@@ -1,18 +1,23 @@
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-*.test
-*.out
-*.iml
-*.ipr
-*.iws
-.idea/
-/build/
-/dist/
-go.work
-/bin/
+# Node modules
+frontend/node_modules/
+
+# React build
+frontend/dist/
+
+# Metadata
+metadata.json
+
+# Storage folders
+node3000_network/
+node4000_network/
+node5000_network/
+
+# Go installer
+*.msi
+
+# OS files
+.DS_Store
+Thumbs.db
 
 # Node modules
 frontend/node_modules/

@@ -88,6 +88,8 @@ func (s *Store) WriteDecrypt(encryptKey []byte, id, key string, r io.Reader) (in
 		return 0, err
 	}
 
+	defer f.Close()
+
 	n, err := crypto.CopyDecrypt(encryptKey, r, f)
 	return int64(n), err
 }
@@ -110,6 +112,8 @@ func (s *Store) writeStream(id, key string, r io.Reader) (int64, error) {
 		return 0, err
 	}
 
+	defer f.Close()
+
 	return io.Copy(f, r)
 }
 
@@ -128,6 +132,7 @@ func (s *Store) readStream(id, key string) (int64, io.ReadCloser, error) {
 
 	fi, err := file.Stat()
 	if err != nil {
+		file.Close()
 		return 0, nil, err
 	}
 
