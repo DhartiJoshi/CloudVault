@@ -1,79 +1,110 @@
-# Distributed File Storage in Go
+# CloudVault
 
-Build a decentralized, fully distributed, content-addressable file storage system using Go that can handle and stream very large files. This project covers system design, low-level programming, and network protocols, all while building a highly practical and scalable application.
+CloudVault is a distributed cloud storage application built with Go and React. It allows users to upload, download, search, and delete files through a web interface while storing data across a peer-to-peer network.
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Example Usage](#example-usage)
-- [Reference](#reference)
-- [Contributing](#contributing)
-- [License](#license)
+The project was built to explore distributed systems, peer-to-peer networking, REST APIs, and full-stack development.
 
-## Introduction
-This project aims to create a decentralized, fully distributed, content-addressable file storage system using Go. The system is designed to handle and stream very large files efficiently. Key features and concepts covered in this project include:
+## Features
 
-- **Decentralization**: The file storage system does not rely on a central server. Instead, it uses a peer-to-peer (P2P) network where each node can store and share files.
-- **File Server**: Manages file storage, retrieval, and deletion. Each file server operates independently but can communicate with other file servers in the network.
-- **File Storage and Retrieval**: The project covers efficient methods for storing, retrieving, and deleting files in a distributed environment.
-- **TCP Transport Layer**: Custom TCP transport is used for peer-to-peer communication, including custom decoders and handshake functions.
-- **Low-Level Programming**: The project involves low-level programming techniques in Go, providing a deep understanding of system-level operations and memory management.
-- **Network Protocols**: The system uses custom network protocols for efficient data transfer and communication between nodes. TCP is the primary transport layer used.
-- **Peer-to-Peer Communication**: Nodes in the network communicate directly with each other to exchange files and information. This involves implementing custom P2P communication protocols.
-- **Content Addressable Storage (CAS)**: Uses CAS mechanisms to ensure that each piece of data is uniquely identified and stored based on its content.
-- **Streaming and Caching**: Techniques for streaming large files and caching frequently accessed data to improve performance are implemented.
-- **Encryption and Security**: Files are encrypted to ensure data security and privacy during storage and transmission.
-- **Bootstrap Nodes**: Initial nodes used to join the P2P network and discover other nodes.
+- Distributed file storage
+- Secure file upload
+- File download
+- File deletion
+- Real-time file search
+- Persistent metadata after backend restart
+- Dynamic dashboard showing storage usage, total files, and active nodes
+- Responsive React interface built with Tailwind CSS
 
+## How it Works
 
-## Installation
-To install and set up this project, follow these steps:
+Unlike traditional cloud storage systems that rely on a single server, CloudVault stores files across multiple peer nodes.
 
-1. **Clone the repository:**
-    ```sh
-    git clone https://github.com/yigithankarabulut/distributed-file-storage.git
-    cd distributed-file-storage
-    ```
+When a file is uploaded, the React frontend sends it to the Go backend through a REST API. The backend stores the file in the distributed storage network and updates the metadata so the dashboard reflects the latest files.
 
-2. **Install dependencies:**
-    ```sh
-    go mod download
-    ```
+When a user downloads a file, the backend locates it in the network and streams it back to the frontend.
 
-## Usage
-We have some make commands, use the following commands:
+Deleting a file removes its metadata and immediately refreshes the dashboard.
 
-```sh
-make build
-make run
-make test
+## Backend
+
+The backend is built around a distributed storage engine written in Go.
+
+Some of the core concepts used are:
+
+- Peer-to-peer networking
+- Content Addressable Storage (CAS)
+- TCP communication between nodes
+- File encryption
+- Bootstrap nodes for peer discovery
+- Distributed file replication
+
+## Tech Stack
+
+**Frontend**
+
+- React
+- JavaScript
+- Tailwind CSS
+- Axios
+
+**Backend**
+
+- Go
+- REST APIs
+- TCP Networking
+- Peer-to-Peer Architecture
+- Content Addressable Storage (CAS)
+
+## Running the Project
+
+Clone the repository
+
+```bash
+git clone https://github.com/DhartiJoshi/CloudVault.git
+cd CloudVault
 ```
 
-## Example Usage
-The main program sets up multiple file servers on different ports, demonstrating how they interact and handle file operations. Here's a brief overview of what happens in the `main.go` file:
+Start the backend
 
-- Three file servers are created on different ports (`:3000`, `:4000`, and `:5000`).
-- The servers are interconnected, with the third server (`:5000`) knowing about the first two servers (`:3000`, `:4000`).
-- The servers start running in separate goroutines.
-- The main program performs file storage and retrieval operations, demonstrating the system's functionality.
+```bash
+go run ./cmd
+```
 
-This project provides a comprehensive example of building a distributed file storage system from scratch, leveraging Go's capabilities for low-level programming and efficient network communication.
+Start the frontend
 
-## Reference
-Thanks to Anthony GG.
-- [Anthony GG's GitHub Repository](https://github.com/anthdm/distributedfilesystemgo)
-- [YouTube Tutorial](https://www.youtube.com/watch?v=IoY6bE--A54)
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
+Frontend runs on:
 
-## Contributing
-Contributions are welcome! Please follow these steps to contribute:
+```
+http://localhost:5173
+```
 
-Fork the repository.\
-Create a new branch (git checkout -b feature/YourFeature).\
-Commit your changes (git commit -m 'Add some feature').\
-Push to the branch (git push origin feature/YourFeature).\
-Open a pull request.
+Backend API runs on:
+
+```
+http://localhost:8080
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| GET | `/files` | List uploaded files |
+| POST | `/upload` | Upload a file |
+| GET | `/download?name=<filename>` | Download a file |
+| DELETE | `/delete?name=<filename>` | Delete a file |
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+## Acknowledgments
+
+The distributed storage engine used in this project is based on the open-source work of **Yigit Hankarabulut**, inspired by the distributed systems tutorials by **Anthony GG**.
+
+I extended the project by developing a React frontend, integrating REST APIs, adding persistent metadata, implementing file upload, download, delete, and search functionality, and building a responsive dashboard for file management.
